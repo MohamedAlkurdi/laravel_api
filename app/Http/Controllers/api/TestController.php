@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use PDO;
 
 class TestController extends Controller
 {
@@ -117,6 +118,23 @@ class TestController extends Controller
                     'message' => 'Element not found.',
                 ], 404);
             }
+        }
+    }
+
+    public function delete($id){
+        $element = Test::find($id);
+
+        if($element){
+            $element->delete();
+            return response()->json([
+                "status"=>200,
+                "message"=>"deleted successully."
+            ],200);
+        }else{
+            return response()->json([
+                "status"=>404,
+                "message"=>"element was not found."
+            ],404);
         }
     }
 }
